@@ -29,18 +29,25 @@ describe('Simple command nodes', () => {
 		expect(() => handler.dispatch('thiscommanddoesnotexist', god)).toThrow()
 	})
 
-	handler.register<[string], Permissible>({
+	handler.register<[string, string], Permissible>({
 		name: 'witharg',
-		arguments: [new SingleWordArgument('arg', 'arg', false)],
-		execute: (permissible, args) => args[0]
+		arguments: [
+			new SingleWordArgument('arg', 'arg', false),
+			new SingleWordArgument('arg2', 'optional', true)
+		],
+		execute: (permissible, args) => args.join(' ').trim()
 	})
 
 	it('correctly processes simple string arguments', () => {
-		expect(handler.dispatch('witharg hello', god)).toEqual('hello')
+		expect(handler.dispatch('witharg hello world', god)).toEqual('hello world')
 	})
 
 	it('throws an error when a required argument is missing', () => {
 		expect(() => handler.dispatch('witharg', god)).toThrow()
+	})
+
+	it('does not throw when an optional argument is missing', () => {
+		expect(handler.dispatch('witharg hello', god)).toEqual('hello')
 	})
 })
 

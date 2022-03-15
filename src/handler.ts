@@ -1,4 +1,4 @@
-import {CommandNode} from './types/tree.js'
+import {CommandNode} from './node/node.js'
 import {Permissible} from './types/permissible.js'
 
 export class CommandHandler<T extends Permissible> {
