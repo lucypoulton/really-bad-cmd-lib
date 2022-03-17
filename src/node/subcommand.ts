@@ -1,6 +1,6 @@
 import {CommandNode} from './node.js'
 import {SingleWordArgument} from '../argument/singleWord'
-import {Permissible} from '../types/permissible.js'
+import {Permissible} from '../permissible.js'
 
 export class SubcommandNode implements CommandNode<[string]> {
 	readonly arguments = [new SingleWordArgument('arg', 'arg', false)] as const

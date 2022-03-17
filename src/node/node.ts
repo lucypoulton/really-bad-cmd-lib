@@ -1,5 +1,5 @@
-import {Condition} from '../types/condition.js'
-import {Permissible} from '../types/permissible.js'
+import {Condition} from '../condition.js'
+import {Permissible} from '../permissible.js'
 import {Argument} from '../argument/argument.js'
 
 export interface CommandNode<T extends any[], U extends Permissible = Permissible> {

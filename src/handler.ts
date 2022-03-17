@@ -1,5 +1,5 @@
 import {CommandNode} from './node/node.js'
-import {Permissible} from './types/permissible.js'
+import {Permissible} from './permissible.js'
 
 export class CommandHandler<T extends Permissible> {
 	private commands: Map<string, CommandNode<any, any>> = new Map()
@@ -16,7 +16,12 @@ export class CommandHandler<T extends Permissible> {
 		if (checked === undefined) checked = permissible as T
 		const values = []
 		for (const arg of node.arguments) {
-			const parsed = arg.parse(args)
+			let parsed: string;
+			try {
+				parsed = arg.parse(args)
+			} catch (e) {
+				throw `Error parsing argument ${arg.name}: ${e}`
+			}
 			if (!parsed && !arg.optional) throw `Missing argument ${arg.name}`
 			values.push(parsed)
 		}

@@ -1,5 +1,5 @@
 import {SubcommandNode} from '../src/node/subcommand'
-import {Permissible} from '../src/types/permissible'
+import {Permissible} from '../src/permissible.js'
 
 const god: Permissible = { hasPermission: () => true }
 

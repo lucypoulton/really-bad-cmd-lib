@@ -1,5 +1,5 @@
 import {CommandHandler} from '../src/handler'
-import {Permissible} from '../src/types/permissible'
+import {Permissible} from '../src/permissible.js'
 import {SingleWordArgument} from '../src/argument/singleWord'
 
 const god: Permissible = {

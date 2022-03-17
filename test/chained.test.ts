@@ -1,6 +1,6 @@
 import {CommandHandler} from '../src/handler'
 import {SingleWordArgument} from '../src/argument/singleWord'
-import {Permissible} from '../src/types/permissible'
+import {Permissible} from '../src/permissible.js'
 import {CommandNode} from '../src/node/node.js'
 
 const god: Permissible = {hasPermission: () => true}

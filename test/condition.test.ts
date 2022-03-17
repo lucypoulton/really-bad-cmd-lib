@@ -1,5 +1,5 @@
-import {Condition} from '../src/types/condition'
-import {Permissible} from '../src/types/permissible'
+import {Condition} from '../src/condition'
+import {Permissible} from '../src/permissible'
 
 const god: Permissible = {
 	hasPermission: () => true
