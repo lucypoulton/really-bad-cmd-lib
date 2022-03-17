@@ -13,7 +13,7 @@ export abstract class AbstractArgument<T> implements Argument<T> {
 	readonly name: string
 	readonly optional: boolean
 
-	protected constructor(name: string, description: string, optional: boolean) {
+	constructor(name: string, description: string, optional: boolean) {
 		this.name = name
 		this.description = description
 		this.optional = optional

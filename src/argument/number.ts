@@ -1,4 +1,4 @@
-import {AbstractArgument} from './argument.js'
+import {AbstractArgument} from './argument.ts'
 
 export class NumberArgument extends AbstractArgument<number> {
 
@@ -9,27 +9,29 @@ export class NumberArgument extends AbstractArgument<number> {
 		this.validators = validators
 	}
 
-	parse(input: string[]): number {
-		parseFloat(input.shift() ?? '')
-		return 0;
+	parse(input: string[]): number | null {
+		if (input.length == 0) return null
+		const parsed = parseFloat(input.shift() ?? '')
+		this.validators.forEach(x => x(parsed))
+		return parsed;
 	}
 
 	suggest(input: string[]): string[] {
-		return [];
+		return [`<${this.name}>`];
 	}
 }
 
 export namespace NumberArgument {
-	export type Validator = (arg: number) => boolean
+	export type Validator = (arg: number) => void
 
 	export const integer: Validator = (num) => {
-		if (Number.isInteger(num)) return true
+		if (Number.isInteger(num)) return
 		throw 'Expected an integer'
 	}
 
 	export function between(lower: number, upper: number): Validator {
 		return num => {
-			if (num >= lower && num <= upper) return true
+			if (num >= lower && num <= upper) return
 			throw `Expected a number between ${lower} and ${upper}`
 		}
 	}

@@ -1,5 +1,5 @@
-import {CommandNode} from './node/node.js'
-import {Permissible} from './permissible.js'
+import {CommandNode} from './node/node.ts'
+import {Permissible} from './permissible.ts'
 
 export class CommandHandler<T extends Permissible> {
 	private commands: Map<string, CommandNode<any, any>> = new Map()
@@ -12,7 +12,7 @@ export class CommandHandler<T extends Permissible> {
 	private static execute<A extends any[], T extends Permissible>
 	(node: CommandNode<A, T>, args: string[], permissible: Permissible): string | undefined {
 		let checked = node.condition?.(permissible)
-		if (checked === null) throw 'No permission'
+		if (checked === null) throw new Error('No permission')
 		if (checked === undefined) checked = permissible as T
 		const values = []
 		for (const arg of node.arguments) {
@@ -20,9 +20,9 @@ export class CommandHandler<T extends Permissible> {
 			try {
 				parsed = arg.parse(args)
 			} catch (e) {
-				throw `Error parsing argument ${arg.name}: ${e}`
+				throw new Error(`Error parsing argument ${arg.name}: ${e}`)
 			}
-			if (!parsed && !arg.optional) throw `Missing argument ${arg.name}`
+			if (!parsed && !arg.optional) throw new Error(`Missing argument ${arg.name}`)
 			values.push(parsed)
 		}
 		const nextNode = node.next?.(checked, values as A)
@@ -33,7 +33,7 @@ export class CommandHandler<T extends Permissible> {
 	public dispatch(command: string, permissible: Permissible) {
 		const split = command.split(' ')
 		const node = this.commands.get(split.shift()!)
-		if (!node) throw 'No such command'
+		if (!node) throw new Error('No such command')
 
 		return CommandHandler.execute(node, split, permissible)
 	}

@@ -1,12 +1,13 @@
-import {CommandHandler} from '../src/handler'
-import {Permissible} from '../src/permissible.js'
-import {SingleWordArgument} from '../src/argument/singleWord'
+import {CommandHandler} from '../src/handler.ts'
+import {Permissible} from '../src/permissible.ts'
+import {SingleWordArgument} from '../src/argument/singleWord.ts'
+import { assertEquals, assertThrows } from "https://deno.land/std@0.130.0/testing/asserts.ts";
 
 const god: Permissible = {
 	hasPermission: () => true
 }
 
-describe('Simple command nodes', () => {
+Deno.test('Simple command nodes', async t => {
 	const handler = new CommandHandler()
 	handler.register({
 		name: 'example1',
@@ -19,14 +20,14 @@ describe('Simple command nodes', () => {
 		execute: () => 'example 2'
 	})
 
-	it('dispatches the correct command', () => {
-		expect(handler.dispatch('example1', god)).toEqual('example 1')
-		expect(handler.dispatch('example2', god)).toEqual('example 2')
+	await t.step('dispatches the correct command', () => {
+		assertEquals(handler.dispatch('example1', god), 'example 1')
+		assertEquals(handler.dispatch('example2', god), 'example 2')
 	})
 
 
-	it('throws an error when a command that doesnt exist is dispatched', () => {
-		expect(() => handler.dispatch('thiscommanddoesnotexist', god)).toThrow()
+	await t.step('throws an error when a command that doesnt exist is dispatched', () => {
+		assertThrows(() => handler.dispatch('thiscommanddoesnotexist', god))
 	})
 
 	handler.register<[string, string], Permissible>({
@@ -38,16 +39,16 @@ describe('Simple command nodes', () => {
 		execute: (permissible, args) => args.join(' ').trim()
 	})
 
-	it('correctly processes simple string arguments', () => {
-		expect(handler.dispatch('witharg hello world', god)).toEqual('hello world')
+	await t.step('correctly processes simple string arguments', () => {
+		assertEquals(handler.dispatch('witharg hello world', god), 'hello world')
 	})
 
-	it('throws an error when a required argument is missing', () => {
-		expect(() => handler.dispatch('witharg', god)).toThrow()
+	await t.step('throws an error when a required argument is missing', () => {
+		assertThrows(() => handler.dispatch('witharg', god))
 	})
 
-	it('does not throw when an optional argument is missing', () => {
-		expect(handler.dispatch('witharg hello', god)).toEqual('hello')
+	await t.step('does not throw when an optional argument is missing', () => {
+		assertEquals(handler.dispatch('witharg hello', god), 'hello')
 	})
 })
 
@@ -63,7 +64,7 @@ function failTransformation(): PermissibleProMaxPlusExtremeXDR | null {
 	return null
 }
 
-describe('Conditions', () => {
+Deno.test('Conditions', async t => {
 	const handler = new CommandHandler()
 	handler.register({
 		name: 'test1',
@@ -77,11 +78,11 @@ describe('Conditions', () => {
 		condition: failTransformation,
 		execute: (val) => val.isPermissiblePlus.toString()
 	})
-	it('applies permission transformations correctly', () => {
-		expect(handler.dispatch('test1', god)).toEqual('true')
+	await t.step('applies permission transformations correctly', () => {
+		assertEquals(handler.dispatch('test1', god), 'true')
 	})
 
-	it('throws an error when a permission transformation fails', () => {
-		expect(() => handler.dispatch('test2', god)).toThrow()
+	await t.step('throws an error when a permission transformation fails', () => {
+		assertThrows(() => handler.dispatch('test2', god))
 	})
 })

@@ -1,9 +1,10 @@
-import {SubcommandNode} from '../src/node/subcommand'
-import {Permissible} from '../src/permissible.js'
+import {SubcommandNode} from '../src/node/subcommand.ts'
+import {Permissible} from '../src/permissible.ts'
+import { assertEquals, assertStrictEquals } from "https://deno.land/std@0.130.0/testing/asserts.ts";
 
 const god: Permissible = { hasPermission: () => true }
 
-describe('Subcommand nodes', () => {
+Deno.test('Subcommand nodes', async t => {
 	const node = new SubcommandNode('name',
 		{
 			name: 'test1',
@@ -17,11 +18,11 @@ describe('Subcommand nodes', () => {
 		}
 	)
 
-	it('returns the correct next node', () => {
-		['test1', 'test2'].forEach(x => expect(node.next(god, [x])?.execute(god, [])).toEqual(x))
+	await t.step('returns the correct next node', () => {
+		['test1', 'test2'].forEach(x => assertEquals(node.next(god, [x])?.execute(god, []), x))
 	})
 
-	it('returns undefined for a missing node', () => {
-		expect(node.next(god, ['invalid'])).toStrictEqual(undefined)
+	await t.step('returns undefined for a missing node', () => {
+		assertStrictEquals(node.next(god, ['invalid']), undefined)
 	})
 })

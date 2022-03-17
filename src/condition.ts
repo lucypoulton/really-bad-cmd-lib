@@ -1,4 +1,4 @@
-import {Permissible} from './permissible.js'
+import {Permissible} from './permissible.ts'
 
 export interface Condition<I extends Permissible = Permissible, O extends I = I> {
 	(input: I): O | null,

@@ -1,6 +1,7 @@
-import {AbstractArgument, Argument} from './argument.js'
+import {AbstractArgument} from './argument.ts'
 
 export class GreedyStringArgument extends AbstractArgument<string> {
+
 	parse(input: string[]): string | null {
 		if (input.length == 0) return null
 		const out = input.join(' ')
@@ -8,7 +9,7 @@ export class GreedyStringArgument extends AbstractArgument<string> {
 		return out;
 	}
 
-	suggest(input: string[]): string[] {
+	suggest(_input: string[]): string[] {
 		return [`<${this.name}>`];
 	}
 }

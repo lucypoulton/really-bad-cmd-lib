@@ -1,4 +1,4 @@
-import {AbstractArgument, Argument} from './argument.js'
+import {AbstractArgument} from './argument.ts'
 
 export class SingleWordArgument extends AbstractArgument<string> {
 	parse(input: string[]) {
