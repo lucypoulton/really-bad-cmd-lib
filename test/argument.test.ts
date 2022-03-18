@@ -1,5 +1,5 @@
-import {GreedyStringArgument} from '../src/argument/greedyString.ts'
-import {SingleWordArgument} from '../src/argument/singleWord.ts'
+import GreedyStringArgument from '../src/argument/greedyString.ts'
+import SingleWordArgument from '../src/argument/singleWord.ts'
 import {assertEquals, assertStrictEquals, AssertionError} from "https://deno.land/std@0.130.0/testing/asserts.ts";
 import {NumberArgument} from '../src/argument/number.ts'
 

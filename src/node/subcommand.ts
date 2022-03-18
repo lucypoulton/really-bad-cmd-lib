@@ -1,5 +1,5 @@
 import {CommandNode} from './node.ts'
-import {SingleWordArgument} from '../argument/singleWord.ts'
+import SingleWordArgument from '../argument/singleWord.ts'
 import {Permissible} from '../permissible.ts'
 
 export class SubcommandNode implements CommandNode<[string]> {

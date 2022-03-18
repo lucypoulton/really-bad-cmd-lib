@@ -1,4 +1,4 @@
-import {SubcommandNode} from '../src/node/subcommand.ts'
+import {SubcommandNode} from '../src/node/index.ts'
 import {Permissible} from '../src/permissible.ts'
 import { assertEquals, assertStrictEquals } from "https://deno.land/std@0.130.0/testing/asserts.ts";
 

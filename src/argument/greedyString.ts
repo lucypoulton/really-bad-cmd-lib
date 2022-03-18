@@ -1,6 +1,6 @@
 import {AbstractArgument} from './argument.ts'
 
-export class GreedyStringArgument extends AbstractArgument<string> {
+export default class GreedyStringArgument extends AbstractArgument<string> {
 
 	parse(input: string[]): string | null {
 		if (input.length == 0) return null

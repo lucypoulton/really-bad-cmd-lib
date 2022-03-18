@@ -1,6 +1,6 @@
 import {AbstractArgument} from './argument.ts'
 
-export class SingleWordArgument extends AbstractArgument<string> {
+export default class SingleWordArgument extends AbstractArgument<string> {
 	parse(input: string[]) {
 		return input.shift() ?? null;
 	}

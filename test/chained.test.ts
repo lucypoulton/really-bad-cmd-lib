@@ -1,5 +1,5 @@
-import {CommandHandler} from '../src/handler.ts'
-import {SingleWordArgument} from '../src/argument/singleWord.ts'
+import CommandHandler from '../src/handler.ts'
+import SingleWordArgument from '../src/argument/singleWord.ts'
 import {Permissible} from '../src/permissible.ts'
 import {CommandNode} from '../src/node/node.ts'
 import { assertEquals } from "https://deno.land/std@0.130.0/testing/asserts.ts";
