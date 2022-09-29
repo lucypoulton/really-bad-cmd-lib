@@ -1,5 +1,8 @@
 import {AbstractArgument} from './argument.ts'
 
+/**
+ * An argument that concatenates the entire available input to a string, fully consuming it.
+ */
 export default class GreedyStringArgument extends AbstractArgument<string> {
 
 	parse(input: string[]): string | null {
@@ -7,9 +10,5 @@ export default class GreedyStringArgument extends AbstractArgument<string> {
 		const out = input.join(' ')
 		input.length = 0
 		return out;
-	}
-
-	suggest(_input: string[]): string[] {
-		return [`<${this.name}>`];
 	}
 }

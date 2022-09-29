@@ -6,18 +6,19 @@ export class SubcommandNode implements CommandNode<[string]> {
 	readonly arguments = [new SingleWordArgument('arg', 'arg', false)] as const
 	readonly name: string
 
-	private nodes: CommandNode<unknown[]>[]
+	private nodes: CommandNode[]
 
-	constructor(name: string, ...nodes: CommandNode<unknown[]>[]) {
+	constructor(name: string, ...nodes: CommandNode[]) {
 		this.name = name
 		this.nodes = nodes
 	}
 
-	execute(permissible: Permissible, args: [string]) {
+	execute(_permissible: Permissible, _args: [string]) {
+		// FIXME
 		return 'TODO - help';
 	}
 
-	next(permissible: Permissible, args: [string]) {
+	next(_permissible: Permissible, args: [string]) {
 		return this.nodes.find(x => x.name == args[0])
 	}
 }

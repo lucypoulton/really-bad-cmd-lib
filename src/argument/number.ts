@@ -2,7 +2,8 @@ import {AbstractArgument} from './argument.ts'
 
 /**
  * A validator function.
- * @throws a string error message if the given value is not successfully validated.
+ * These functions do not return a value, instead signaling a failure by throwing a string error message
+ * if the given value is not successfully validated.
  */
 export type Validator = (arg: number) => void
 
