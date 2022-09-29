@@ -50,7 +50,7 @@ Deno.test('Arguments', async (t) => {
 	})
 
 	await t.step('Number', async t2 => {
-		const arg = new NumberArgument('name', 'description', false, NumberArgument.integer)
+		const arg = new NumberArgument('name', 'description', false, NumberArgument.validators.integer)
 		await t2.step('only consumes one number', () => {
 			const array = ['123', 'two', 'three']
 			assertEquals(arg.parse(array), 123)

@@ -1,4 +1,4 @@
-import {Condition} from '../src/condition.ts'
+import * as Condition from '../src/condition.ts'
 import {Permissible} from '../src/permissible.ts'
 import { assertStrictEquals, assertExists } from "https://deno.land/std@0.130.0/testing/asserts.ts";
 

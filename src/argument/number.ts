@@ -1,10 +1,32 @@
 import {AbstractArgument} from './argument.ts'
 
+/**
+ * A validator function.
+ * @throws a string error message if the given value is not successfully validated.
+ */
+export type Validator = (arg: number) => void
+
+/**
+ * An argument that consumes a single input string and outputs a number,
+ * which can be constrained by passing in validator functions.
+ *
+ * @see Validator
+ */
 export class NumberArgument extends AbstractArgument<number> {
 
-	validators: NumberArgument.Validator[]
+	readonly validators: Validator[]
 
-	constructor(name: string, description: string, optional: boolean, ...validators: NumberArgument.Validator[]) {
+	/**
+	 * Creates a new NumberArgument.
+	 *
+	 * @param name this argument's name
+	 * @param description this argument's description
+	 * @param optional whether this argument is optional
+	 * @param validators an array of validator functions to check the value with.
+	 *
+	 * @see AbstractArgument constructor
+	 */
+	constructor(name: string, description: string, optional: boolean, ...validators: Validator[]) {
 		super(name, description, optional)
 		this.validators = validators
 	}
@@ -16,23 +38,41 @@ export class NumberArgument extends AbstractArgument<number> {
 		return parsed;
 	}
 
-	suggest(input: string[]): string[] {
+	suggest(_: string[]): string[] {
 		return [`<${this.name}>`];
 	}
-}
 
-export namespace NumberArgument {
-	export type Validator = (arg: number) => void
+	/**
+	 * Predefined validators.
+	 */
+	static validators = {
+		/**
+		 * Validates numbers that are not NaN.
+		 * @throws `Expected a number` if the value is NaN
+		 */
+		notNaN(num: number) {
+			if (Number.isNaN(num)) return
+			throw 'Expected a number'
+		},
 
-	export const integer: Validator = (num) => {
-		if (Number.isInteger(num)) return
-		throw 'Expected an integer'
-	}
+		/**
+		 * Validates numbers that are integers.
+		 * @throws `Expected an integer` if the value is not an integer
+		 */
+		integer(num: number) {
+			if (Number.isInteger(num)) return
+			throw 'Expected an integer'
+		},
 
-	export function between(lower: number, upper: number): Validator {
-		return num => {
-			if (num >= lower && num <= upper) return
-			throw `Expected a number between ${lower} and ${upper}`
+		/**
+		 * Validates numbers where `lower <= n <= upper`.
+		 * @throws `Expected a number between <lower> and <upper>` if the value is not in range
+		 */
+		between(lower: number, upper: number): Validator {
+			return num => {
+				if (num >= lower && num <= upper) return
+				throw `Expected a number between ${lower} and ${upper}`
+			}
 		}
 	}
 }

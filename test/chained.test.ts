@@ -12,10 +12,10 @@ Deno.test('Chained command nodes', async t => {
 		name: 'example',
 		arguments: [],
 		execute: () => 'first',
-		next: (): CommandNode<[string], any> => ({
+		next: (): CommandNode<[string]> => ({
 			name: 'second',
 			arguments: [new SingleWordArgument('test', 'test', true)],
-			execute: (permissible, args) => 'second ' + args[0]
+			execute: (_, args) => 'second ' + args[0]
 		})
 	})
 
