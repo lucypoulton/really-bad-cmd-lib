@@ -52,8 +52,7 @@ export class NumberArgument extends AbstractArgument<number> {
 		 * @throws `Expected a number` if the value is NaN
 		 */
 		notNaN(num: number) {
-			if (Number.isNaN(num)) return
-			throw 'Expected a number'
+			if (Number.isNaN(num)) throw 'Expected a number'
 		},
 
 		/**

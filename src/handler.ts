@@ -33,7 +33,7 @@ export default class CommandHandler<T extends Permissible> {
 		}) as A; // tuple type info is lost during iteration - this is ensured by logic (and unit tested)
 
 		const nextNode = node.next?.(checked, values)
-		if (args.length > 0 && nextNode) return this.execute(nextNode, args, checked)
+		if ((args.length > 0 || nextNode?.arguments.length === 0) && nextNode) return this.execute(nextNode, args, checked)
 		return node.execute(checked, values)
 	}
 
