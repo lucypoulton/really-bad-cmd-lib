@@ -1,7 +1,7 @@
 import {CommandNode} from './node/node.ts'
 import {Permissible} from './permissible.ts'
 
-export default class CommandHandler<T extends Permissible> {
+export class CommandHandler<T extends Permissible> {
 	private commands: Map<string, CommandNode> = new Map()
 
 	public register<A extends unknown[], T extends Permissible>(node: CommandNode<A, T>) {
