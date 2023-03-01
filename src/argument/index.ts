@@ -1,4 +1,4 @@
 export * from './argument.ts'
-export * from './greedyString.ts'
+export {default as GreedyStringArgument} from './greedyString.ts'
 export * from './number.ts'
-export * from './singleWord.ts'
+export {default as SingleWordArgument} from './singleWord.ts'
