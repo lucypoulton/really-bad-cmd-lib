@@ -2,9 +2,9 @@ import {CommandNode} from './node/node.ts'
 import {Permissible} from './permissible.ts'
 
 export class CommandHandler<T extends Permissible> {
-	private commands: Map<string, CommandNode<unknown[], Permissible, T>> = new Map()
+	private commands: Map<string, CommandNode<unknown[], T, unknown>> = new Map()
 
-	public register(node: CommandNode<unknown[], Permissible, T>) {
+	public register(node: CommandNode<unknown[], T, unknown>) {
 		if (this.commands.has(node.name)) throw new Error('Tried to register a duplicate node')
 		this.commands.set(node.name, node)
 	}
