@@ -2,15 +2,15 @@ import {CommandNode} from './node/node.ts'
 import {Permissible} from './permissible.ts'
 
 export class CommandHandler<T extends Permissible> {
-	private commands: Map<string, CommandNode> = new Map()
+	private commands: Map<string, CommandNode<unknown[], Permissible, T>> = new Map()
 
-	public register<A extends unknown[], T extends Permissible>(node: CommandNode<A, T>) {
+	public register(node: CommandNode<unknown[], Permissible, T>) {
 		if (this.commands.has(node.name)) throw new Error('Tried to register a duplicate node')
 		this.commands.set(node.name, node)
 	}
 
-	private static execute<A extends unknown[], T extends Permissible>
-	(node: CommandNode<A, T>, args: string[], permissible: Permissible): string | undefined {
+	private static execute<A extends unknown[], T extends Permissible, TRet>
+	(node: CommandNode<A, T, TRet>, args: string[], permissible: Permissible): TRet | undefined {
 
 		/*
 		- if `node.condition` is not defined, it will short circuit and result in `undefined`
